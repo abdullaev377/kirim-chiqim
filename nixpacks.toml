@@ -1,18 +1,18 @@
-providers = ["python", "node"]
-
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip"]
+nixPkgs = ["python311", "python311Packages.pip", "nodejs_18", "npm"]
 
 [phases.install]
 cmds = [
-  "python -m pip install -r requirements.txt",
-  "cd frontend && npm ci"
+    "python -m ensurepip --upgrade || true",
+    "python -m pip install --upgrade pip",
+    "python -m pip install -r requirements.txt",
+    "cd frontend && npm ci"
 ]
 
 [phases.build]
 cmds = [
-  "cd frontend && npm run build",
-  "python manage.py collectstatic --noinput"
+    "cd frontend && npm run build",
+    "python manage.py collectstatic --noinput"
 ]
 
 [start]
